@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Website</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#f4f7fb;
+color:#333;
+}
+
+header{
+background:linear-gradient(135deg,#2563eb,#4f46e5);
+color:white;
+padding:20px 60px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:500;
+}
+
+.hero{
+height:60vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+background:linear-gradient(135deg,#3b82f6,#6366f1);
+color:white;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:18px;
+opacity:0.9;
+}
+
+.container{
+padding:60px;
+max-width:1200px;
+margin:auto;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.05);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:40px;
+background:#111;
+color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>My Website</h2>
+<nav>
+<a href="#">Home</a>
+<a href="#">Notes</a>
+<a href="#">Recipes</a>
+<a href="#">Quotes</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Welcome to My Website</h1>
+<p>Study Notes • Recipes • Motivation</p>
+</section>
+
+<section class="container">
+<h2>Categories</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>📚 Study Notes</h3>
+<p>Access university notes and helpful learning resources.</p>
+</div>
+
+<div class="card">
+<h3>🍲 Recipes</h3>
+<p>Explore delicious recipes and cooking ideas.</p>
+</div>
+
+<div class="card">
+<h3>💡 Motivation</h3>
+<p>Read inspiring quotes and motivational content.</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+<p>© 2026 My Website</p>
+</footer>
+
+<script>
+console.log("Website loaded successfully");
+
+document.querySelectorAll(".card").forEach(card=>{
+card.addEventListener("click",()=>{
+alert("Card clicked!");
+});
+});
+</script>
+
+</body>
+</html>
