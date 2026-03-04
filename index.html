@@ -1,148 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Vanilla Workspace</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --accent: #0984e3;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body{
-background:#f4f7fb;
-color:#333;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-header{
-background:linear-gradient(135deg,#2563eb,#4f46e5);
-color:white;
-padding:20px 60px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+        /* --- LAYOUT --- */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
 
-nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-font-weight:500;
-}
+        header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
 
-.hero{
-height:60vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-background:linear-gradient(135deg,#3b82f6,#6366f1);
-color:white;
-}
+        h1 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
 
-.hero h1{
-font-size:48px;
-margin-bottom:10px;
-}
+        /* --- INTERACTIVE ELEMENTS --- */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
 
-.hero p{
-font-size:18px;
-opacity:0.9;
-}
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
+            outline: none;
+        }
 
-.container{
-padding:60px;
-max-width:1200px;
-margin:auto;
-}
+        button {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-margin-top:30px;
-}
+        button:hover {
+            opacity: 0.9;
+        }
 
-.card{
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 10px 20px rgba(0,0,0,0.05);
-transition:0.3s;
-}
+        ul {
+            list-style: none;
+        }
 
-.card:hover{
-transform:translateY(-5px);
-}
+        li {
+            background: #f9f9f9;
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
 
-footer{
-text-align:center;
-padding:30px;
-margin-top:40px;
-background:#111;
-color:#aaa;
-}
-</style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #b2bec3;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h2>My Website</h2>
-<nav>
-<a href="#">Home</a>
-<a href="#">Notes</a>
-<a href="#">Recipes</a>
-<a href="#">Quotes</a>
-</nav>
-</header>
+    <div class="container">
+        <header>
+            <h1>Focus Dashboard</h1>
+            <p id="date-display"></p>
+        </header>
 
-<section class="hero">
-<h1>Welcome to My Website</h1>
-<p>Study Notes • Recipes • Motivation</p>
-</section>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Enter a new goal...">
+            <button id="addBtn">Add</button>
+        </div>
 
-<section class="container">
-<h2>Categories</h2>
+        <ul id="taskList">
+            </ul>
+        
+        <div id="emptyMsg" class="empty-state">No tasks for today. Start fresh!</div>
+    </div>
 
-<div class="cards">
+    <script>
+        // 1. Data & State
+        const taskInput = document.getElementById('taskInput');
+        const addBtn = document.getElementById('addBtn');
+        const taskList = document.getElementById('taskList');
+        const emptyMsg = document.getElementById('emptyMsg');
+        const dateDisplay = document.getElementById('date-display');
 
-<div class="card">
-<h3>📚 Study Notes</h3>
-<p>Access university notes and helpful learning resources.</p>
-</div>
+        // 2. Set the current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateDisplay.innerText = new Date().toLocaleDateString(undefined, options);
 
-<div class="card">
-<h3>🍲 Recipes</h3>
-<p>Explore delicious recipes and cooking ideas.</p>
-</div>
+        // 3. Logic Functions
+        function addTask() {
+            const text = taskInput.value.trim();
+            
+            if (text !== "") {
+                // Hide empty message
+                emptyMsg.style.display = 'none';
 
-<div class="card">
-<h3>💡 Motivation</h3>
-<p>Read inspiring quotes and motivational content.</p>
-</div>
+                // Create Element
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${text}</span>
+                    <button style="background: #ff7675; padding: 5px 10px; font-size: 12px;" onclick="removeTask(this)">Delete</button>
+                `;
+                
+                taskList.appendChild(li);
+                taskInput.value = "";
+                taskInput.focus();
+            }
+        }
 
-</div>
-</section>
+        function removeTask(btn) {
+            btn.parentElement.remove();
+            if (taskList.children.length === 0) {
+                emptyMsg.style.display = 'block';
+            }
+        }
 
-<footer>
-<p>© 2026 My Website</p>
-</footer>
+        // 4. Event Listeners
+        addBtn.addEventListener('click', addTask);
 
-<script>
-console.log("Website loaded successfully");
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
 
-document.querySelectorAll(".card").forEach(card=>{
-card.addEventListener("click",()=>{
-alert("Card clicked!");
-});
-});
-</script>
-
+        // Log to confirm script execution
+        console.log("App initialized successfully. No imports detected.");
+    </script>
 </body>
 </html>
